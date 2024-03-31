@@ -1,0 +1,34 @@
+name: Polybot Microservice Deployment
+
+on:
+  push:
+    paths:
+      - 'polybot/**'
+    branches:
+      - main
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo code
+        uses: actions/checkout@v2
+
+      - name: Build and push image
+        run: |
+          cd polybot
+          
+          # TODO your implementation here....          
+
+  Deploy:
+    runs-on: ubuntu-latest
+    needs:
+      - Build
+
+    steps:
+      - name: Checkout the repo code
+        uses: actions/checkout@v2
+      - name: Deploy new version
+        run: |         
+          # TODO your implementation here....     
+     
