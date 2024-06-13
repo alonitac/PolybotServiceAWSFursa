@@ -1,11 +1,3 @@
-> [!IMPORTANT]
-> This project is part of the [DevOpsTheHardWay][DevOpsTheHardWay] course. Please [onboard the course][onboarding_tutorial] before starting. 
-> 
-> The project builds upon the concepts covered in our [previous Docker project][PolybotServiceDocker].
-> To make ensure a smooth learning experience, we recommend completing the Docker project first. 
-
-
-
 # The Polybot Service: AWS Project
 
 ## Background and goals
@@ -30,10 +22,8 @@ You'll utilize the majority of the AWS resources covered in the tutorials, inclu
    Change `<your-username>` and `<your-project-repo-name>` according to your GitHub username and the name you gave to your fork. E.g. `git clone https://github.com/johndoe/PolybotServiceAWS`.
 3. Open the repo as a code project in your favorite IDE (Pycharm, VSCode, etc..).
    It is also a good practice to create an isolated Python virtual environment specifically for your project ([see here how to do it in PyCharm](https://www.jetbrains.com/help/pycharm/creating-virtual-environment.html)).
-4. This project involves working with many AWS services.
-   Note that you are responsible for the costs of any resources you create. You'll mainly pay for 2-4 EC2 instances and Application Load Balancer. If you work properly, the cost estimation is **35 USD** for a month, assuming your instances are running for 8 hours a day for a whole month (the project can be completed in much less than a month. You can, and must, stop you instances and delete the ALB at the end of usage to avoid additional charges).
 
-Later on, you are encouraged to change the `README.md` file content to provide relevant information about your service project.
+Later on, you are required to change the `README.md` file content to provide relevant information about your service project.
 
 Let's get started...
 
@@ -59,11 +49,8 @@ Let's get started...
 - The service should be highly available. For that, you'll use an **Application Load Balancer (ALB)** that routes the traffic across the instances located in different AZs. 
   
   The ALB must have an **HTTPS** listener, as working with **HTTP** [is not allowed](https://core.telegram.org/bots/webhooks) by Telegram. To use HTTPS you need a TLS certificate. You can get it either by:
-  - [Generate a self-signed certificate](https://core.telegram.org/bots/webhooks#a-self-signed-certificate) and import it to the ALB listener. In that case the certificate `Common Name` (`CN`) must be your ALB domain name (E.g. `test-1369101568.eu-central-1.elb.amazonaws.com`), and you must pass the certificate file when setting the webhook in `bot.py` (i.e. `self.telegram_bot_client.set_webhook(..., certificate=open(CERTIFICATE_FILE_NAME, 'r'))`).
-  
-    Or 
-
-  - [Register a real domain using Route53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-register.html) (`.click` is one of the cheapest). After registering your domain, in the domain's **Hosted Zone** you should create a subdomain **A alias record** that routes traffic to your ALB. In addition, you need to request a **public certificate** for your domain address, since the domain has been issued by Amazon, issuing a certificate [can be easily done with AWS Certificate Manager (ACM)](https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-request-public.html#request-public-console). 
+  [Generate a self-signed certificate](https://core.telegram.org/bots/webhooks#a-self-signed-certificate) and import it to the ALB listener. In that case the certificate `Common Name` (`CN`) must be domain name (E.g. `mydomain.click`), and you must pass the certificate file when setting the webhook in `bot.py` (i.e. `self.telegram_bot_client.set_webhook(..., certificate=open(CERTIFICATE_FILE_NAME, 'r'))`).
+  In the domain's **Hosted Zone** you should create a subdomain **A alias record** that routes traffic to your ALB. 
 
 - [Read Telegram's webhook docs](https://core.telegram.org/bots/webhooks) to get the CIDR of Telegram servers. Since your ALB is publicly accessible, it's better to restrict incoming traffic access to the ALB exclusively to Telegram servers by applying inbound rules to the **Security Group**.
 - Your Telegram token is a sensitive data. It should be stored in [AWS Secret Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html). Create a corresponding secret in Secret Manager, under **Secret type** choose **Other type of secret**.
@@ -117,24 +104,17 @@ Test your CI/CD pipline for both the Polybot and Yolo5 microservices.
 
 ## Submission
 
-TBD - There is no any submission method for that project right now.
+You have to present your work to the course staff, in a 10-15 minutes demo. Your presentations would be evaluated according to the below list, in order of priority:
 
-### Share your project 
-
-You are highly encourages to share your project with others by creating a **Pull Request**.
-
-Create a Pull Request from your repo, branch `main` (e.g. `johndoe/PolybotServiceAWS`) into our project repo (i.e. `alonitac/PolybotServiceAWS`), branch `main`.  
-Feel free to explore other's pull requests to discover different solution approaches.
-
-As it's only an exercise, we may not approve your pull request (approval would lead your changes to be merged into our original project). 
+1. Showcasing a live, working demo of your work.
+1. Demonstrating deep understanding.
+1. Applying best practices and clean work.
 
 
 # Good Luck
 
-[DevOpsTheHardWay]: https://github.com/alonitac/DevOpsTheHardWay
-[onboarding_tutorial]: https://github.com/alonitac/DevOpsTheHardWay/blob/main/tutorials/onboarding.md
 [github_actions]: ../../actions
 
-[PolybotServiceDocker]: https://github.com/alonitac/PolybotServiceDocker
+[PolybotServiceDocker]: https://github.com/alonitac/PolybotServiceDockerFursa
 [botaws2]: https://alonitac.github.io/DevOpsTheHardWay/img/aws_project_botaws2.png
 [botaws3]: https://alonitac.github.io/DevOpsTheHardWay/img/aws_project_botaws3.png
